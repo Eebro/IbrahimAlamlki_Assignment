@@ -1,7 +1,9 @@
 import re
 import hashlib
 import os
-from access_control import AccessControl, RoleType, Subject
+from access_control import AccessControl
+from enums import RoleType
+from subject import Subject
 
 class Enroller:
 
@@ -99,7 +101,7 @@ class Enroller:
     def get_roles(self):
         print("Enter the number corresponding to the role of the user. The available roles are: ")
         for i, r in enumerate(RoleType):
-            print(f"{i} - {r}")
+            print(f"{i} - {r.name}")  # Access the name attribute to get the enum member without the enum type
         roles = []
         cont = True
         while cont:
@@ -117,6 +119,7 @@ class Enroller:
     def save_record(self, username, password, roles):
         role_types = list(RoleType)
         roles_list = [role_types[role] for role in roles]
+        print ("roles list:", roles_list)
         salt = os.urandom(16)
         hashed_password = self.hash_password(password, salt)
 

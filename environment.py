@@ -11,5 +11,4 @@ class Environment:
         return Environment.get_curr_time().hour
 
 if __name__ == "__main__":
-    # You can add test code here if needed
     pass

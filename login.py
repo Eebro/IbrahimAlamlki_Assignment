@@ -15,18 +15,37 @@ class LogIn:
     def __init__(self, ac: AccessControl):
         self.ac = ac
 
+    def does_username_already_exist(self, username: str) -> bool:
+        with open("passwd.txt", "r") as file:
+            for line in file:
+                stored_username = line.split(":")[0]
+                if stored_username == username:
+                    return True
+        return False
+    
     def prompt_login(self):
         print("SecVaults Investments, Inc. Log In \n------------------------------------------")
         username = input("Username: ")
         password = input("Password: ")
         self.process_login(username, password)
 
+
     def process_login(self, username: str, password: str) -> bool:
-        if not self.ac.does_username_already_exist(username):
+        if not self.does_username_already_exist(username):
             print(self.not_found_msg)
             return False
-
+        
+        print("username", username)
+        print("password", password)
+        
+        # Ensure that s is an instance of the Subject class
         s = self.ac.get_user(username)
+        print("Type of s:", type(s))  # Add this line for debugging
+        
+        if not isinstance(s, Subject):
+            raise ValueError("Invalid subject type. Must be an instance of the Subject class.")
+
+        print("S: ", s)
 
         salt_hash_calculated = self.calculate_salted_hash(s, password)
 
@@ -43,6 +62,7 @@ class LogIn:
             print(self.not_found_msg)
             return False
 
+
     @staticmethod
     def calculate_salted_hash(s: Subject, password: str) -> str:
         try:
@@ -52,7 +72,7 @@ class LogIn:
             salted_hash_password = md.digest(password.encode())
 
             return Enroller.bytes_to_hex(salted_hash_password)
-        except hashlib.AlgorithmAvailable as e:
+        except hashlib.HashAlgorithmAvailable as e:
             print("An exception occurred while calculating salted hash.")
             print(e)
             return ""
