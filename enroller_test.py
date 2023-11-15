@@ -4,13 +4,12 @@ from enroller import Enroller
 class EnrollerTest:
 
     def __init__(self):
-        ac = AccessControl()
-        self.e = Enroller(ac)
+        self.ac = AccessControl()
+        self.e = Enroller(self.ac)
 
     def test_password_mechanism(self, username, password, roles):
         self.e.save_record(username, password, roles)
-        ac = AccessControl()
-        s = ac.get_user(username)
+        s = self.ac.get_user(username)
         if s is not None:
             print(f"{username} was added to the password file successfully.")
         else:
