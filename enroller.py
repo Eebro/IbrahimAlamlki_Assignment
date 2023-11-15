@@ -118,9 +118,9 @@ class Enroller:
 
     def save_record(self, username, password, roles):
         role_types = [  "PREMIUM_CLIENT", "FINANCIAL_ADVISOR", "FINANCIAL_PLANNER","TELLER","INVESTMENT_ANALYST","COMPLIANCE_OFFICER","TECH_SUPPORT"]
-        print ("role types", role_types)
+        #print ("role types", role_types)
         roles_list = [role_types[role] for role in roles]
-        print ("roles list:", roles_list)
+        #print ("roles list:", roles_list)
         salt = os.urandom(16)
         hashed_password = self.hash_password(password, salt)
 

@@ -11,8 +11,8 @@ class Subject:
     def get_name(self) -> str:
         return self.name
 
-    def get_roles(self) -> List[RoleType]:
-        return self.roles
+    def get_roles(self):
+        return [RoleType[r] for r in self.roles]
 
     def get_salt(self) -> str:
         return self.salt

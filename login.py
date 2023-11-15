@@ -40,12 +40,12 @@ class LogIn:
         
         # Ensure that s is an instance of the Subject class
         s = self.ac.get_user(username)
-        print("Type of s:", type(s))  # Add this line for debugging
+        #print("Type of s:", type(s))  # Add this line for debugging
         
         if not isinstance(s, Subject):
             raise ValueError("Invalid subject type. Must be an instance of the Subject class.")
 
-        print("S: ", s)
+        #print("S: ", s)
 
         salt_hash_calculated = self.calculate_salted_hash(s, password)
 
@@ -67,34 +67,42 @@ class LogIn:
     def calculate_salted_hash(s: Subject, password: str) -> str:
         try:
             md = hashlib.sha256()
-            md.update(LogIn.hex_to_bytes(s.get_salt()))
+            md.update(bytes(bytearray(LogIn.hex_to_bytes(s.get_salt()))))  # Convert list to bytes
+            md.update(password.encode('utf-8'))
 
-            salted_hash_password = md.digest(password.encode())
+            salted_hash_password = md.digest()
 
             return Enroller.bytes_to_hex(salted_hash_password)
-        except hashlib.HashAlgorithmAvailable as e:
+        except AttributeError as e:
             print("An exception occurred while calculating salted hash.")
             print(e)
             return ""
+
+
+
+
 
     def print_user_info(self, s: Subject):
         print("User ID is: " + s.get_name())
         roles = s.get_roles()
         for r in roles:
-            print("As a " + r.name() + ":")
+            print("As a " + r.name + ":")
             resources = self.ac.get_role_cap_list(r)
             for res in resources:
                 print(res)
                 if res.get_access_type() == AccessType.CONDITIONAL:
                     print(Role.get_env_policy(r))
 
+
+
     @staticmethod
-    def hex_to_bytes(s: str) -> List[bytes]:
-        len_s = len(s)
-        byte_arr = [0] * (len_s // 2)
-        for i in range(0, len_s, 2):
-            byte_arr[i // 2] = bytes([(int(s[i], 16) << 4) + int(s[i + 1], 16)])
-        return byte_arr
+    def hex_to_bytes(s: str) -> bytes:
+        try:
+            return bytes.fromhex(s)
+        except ValueError:
+            print("Error converting hex to bytes.")
+            return b''
+
 
     @staticmethod
     def main():
