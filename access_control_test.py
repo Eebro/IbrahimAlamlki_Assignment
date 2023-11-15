@@ -7,10 +7,10 @@ class AccessControlTest:
         self.accessControl = AccessControl()
 
     def set_permission(self, permission):
-        self.accessControl.clientPermission = permission
+        self.accessControl.client_permission = permission
 
     def set_validation_required(self, validate):
-        self.accessControl.validationRequired = validate
+        self.accessControl.validation_required = validate
 
     # Roles: REGULAR_CLIENT, PREMIUM_CLIENT, FINANCIAL_ADVISOR, FINANCIAL_PLANNER, TELLER, INVESTMENT_ANALYST, COMPLIANCE_OFFICER, TECH_SUPPORT
     # Resources: CLIENT_INFO, ACCOUNT_BALANCE, INVESTMENTS_PORTFOLIO, CD_FA, CD_FP, CD_IA, MONEY_MARKET_I, DERIVATIVES_TRADING, INTEREST_INSTRUMENTS, PRVT_CONSUMER_INSTRUMENTS, SYSTEM

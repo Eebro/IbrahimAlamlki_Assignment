@@ -34,7 +34,7 @@ class AccessControl:
                 for line in file:
                     fields = line.strip().split(':')  # Using colon (:) as the delimiter
                     user_id, salt, salted_hash, roles_str = fields[0], fields[1], fields[2], fields[3]
-                    roles = [RoleType[role] for role in roles_str.split(',')]
+                    roles = roles_str.split(',')
 
                     role_list = roles
                     user = Subject(user_id, roles, salt, salted_hash)
@@ -56,6 +56,7 @@ class AccessControl:
                 raise ValueError("Invalid subject type. Must be an instance of the Subject class.")
 
     def get_user(self, user_id):
+    # Directly return the user if it exists, otherwise return None
         return self.users.get(user_id, None)
 
     def check_environment_attributes(self, role_type):
