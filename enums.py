@@ -1,0 +1,30 @@
+from enum import Enum
+
+class AccessType(Enum):
+    VIEW = 1
+    MODIFY = 2
+    VALIDATE = 3
+    CONDITIONAL = 4
+
+class ResourceType(Enum):
+    CLIENT_INFO = 1
+    ACCOUNT_BALANCE = 2
+    INVESTMENTS_PORTFOLIO = 3
+    CD_FA = 4
+    CD_FP = 5
+    CD_IA = 6
+    MONEY_MARKET_I = 7
+    DERIVATIVES_TRADING = 8
+    INTEREST_INSTRUMENTS = 9
+    PRVT_CONSUMER_INSTRUMENTS = 10
+    SYSTEM = 11
+
+class RoleType(Enum):
+    REGULAR_CLIENT = 1
+    PREMIUM_CLIENT = 2
+    FINANCIAL_ADVISOR = 3
+    FINANCIAL_PLANNER = 4
+    TELLER = 5
+    INVESTMENT_ANALYST = 6
+    COMPLIANCE_OFFICER = 7
+    TECH_SUPPORT = 8

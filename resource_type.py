@@ -1,0 +1,14 @@
+from enum import Enum
+
+class ResourceType(Enum):
+    CLIENT_INFO = 1
+    ACCOUNT_BALANCE = 2
+    INVESTMENTS_PORTFOLIO = 3
+    CD_FA = 4
+    CD_FP = 5
+    CD_IA = 6
+    MONEY_MARKET_I = 7
+    DERIVATIVES_TRADING = 8
+    INTEREST_INSTRUMENTS = 9
+    PRVT_CONSUMER_INSTRUMENTS = 10
+    SYSTEM = 11
