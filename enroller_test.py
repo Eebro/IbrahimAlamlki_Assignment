@@ -10,6 +10,8 @@ class EnrollerTest:
     def test_password_mechanism(self, username, password, roles):
         self.e.save_record(username, password, roles)
         s = self.ac.get_user(username)
+        print("Type of s:", type(s))  # Add this line for debugging
+
         if s is not None:
             print(f"{username} was added to the password file successfully.")
         else:

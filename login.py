@@ -14,6 +14,7 @@ class LogIn:
 
     def __init__(self, ac: AccessControl):
         self.ac = ac
+        self.e = Enroller(self.ac)
 
     def does_username_already_exist(self, username: str) -> bool:
         with open("passwd.txt", "r") as file:
@@ -39,7 +40,7 @@ class LogIn:
         print("password", password)
 
         # Ensure that s is an instance of the Subject class
-        s = cast(Subject, self.ac.get_user(username))
+        s =  self.ac.get_user(username)
         print("Type of s:", type(s))  # Add this line for debugging
 
         if not isinstance(s, Subject):
@@ -104,4 +105,4 @@ class LogIn:
 if __name__ == "__main__":
     ac = AccessControl()
     login = LogIn(ac)
-    login.prompt_login()
+    login.process_login("test", "Passw0rd!")
