@@ -29,7 +29,9 @@ class Enroller:
         return sha256.digest()
 
     def enrol_user(self):
-        print("Finvest Holdings Registration \n------------------------------------------")
+        print("Finvest Holdings Registration")
+        print ("Client Holdings and Information System\n------------------------------------------")
+        
         username = self.get_unique_username()
         password = self.get_valid_password(username)
         roles = self.get_roles()
@@ -118,6 +120,8 @@ class Enroller:
 
     def save_record(self, username, password, roles):
         role_types = [  "PREMIUM_CLIENT", "FINANCIAL_ADVISOR", "FINANCIAL_PLANNER","TELLER","INVESTMENT_ANALYST","COMPLIANCE_OFFICER","TECH_SUPPORT"]
+        roles = [role - 1 for role in roles]
+
         roles_list = [role_types[role] for role in roles]
         salt = os.urandom(16)
         hashed_password = self.hash_password(password, salt)

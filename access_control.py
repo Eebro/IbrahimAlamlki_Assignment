@@ -11,7 +11,7 @@ class AccessControl:
 
     def __init__(self):
         self.cap_list = {}
-        self.users = {}
+        self.users = self.get_users()
         self.user_role_mapping = {}
         self.client_permission = True
         self.validation_required = False
@@ -60,7 +60,7 @@ class AccessControl:
         return self.users.get(user_id, None)
 
     def check_environment_attributes(self, role_type):
-        if role_type == RoleType.TELLER and not Environment.get_curr_hour() <= 17 and Environment.get_curr_hour() >= 9:
+        if role_type == RoleType.TELLER and not Environment.get_curr_hour() <= 23 and Environment.get_curr_hour() >= 9:
             return False
 
         return True

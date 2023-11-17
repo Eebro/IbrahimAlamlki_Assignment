@@ -1,6 +1,5 @@
 import hashlib
 from typing import List
-from typing import cast
 from access_control import AccessControl
 from subject import Subject
 from enums import RoleType, AccessType
@@ -25,7 +24,8 @@ class LogIn:
         return False
     
     def prompt_login(self):
-        print("Finvest Holdings Log In \n------------------------------------------")
+        print("Finvest Holdings Registration")
+        print ("Client Holdings and Information System\n------------------------------------------")
         username = input("Username: ")
         password = input("Password: ")
         self.process_login(username, password)
@@ -36,16 +36,10 @@ class LogIn:
             print(self.not_found_msg)
             return False
         
-        print("username", username)
-        print("password", password)
-
-        # Ensure that s is an instance of the Subject class
         s =  self.ac.get_user(username)
-        print("Type of s:", type(s))  # Add this line for debugging
 
         if not isinstance(s, Subject):
             raise ValueError("Invalid subject type. Must be an instance of the Subject class.")
-
 
         salt_hash_calculated = self.calculate_salted_hash(s, password)
 
@@ -105,4 +99,4 @@ class LogIn:
 if __name__ == "__main__":
     ac = AccessControl()
     login = LogIn(ac)
-    login.process_login("test", "Passw0rd!")
+    login.prompt_login()
