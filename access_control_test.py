@@ -2,19 +2,20 @@ from access_control import AccessControl
 from environment import Environment
 from enums import RoleType, AccessType, ResourceType
 
+# Define a class for testing the Access Control mechanism
 class AccessControlTest:
     def __init__(self):
         self.accessControl = AccessControl()
 
+    # Method to set client permissions in the AccessControl instance
     def set_permission(self, permission):
         self.accessControl.client_permission = permission
 
+    # Method to set validation requirement in the AccessControl instance
     def set_validation_required(self, validate):
         self.accessControl.validation_required = validate
 
-    # Roles: REGULAR_CLIENT, PREMIUM_CLIENT, FINANCIAL_ADVISOR, FINANCIAL_PLANNER, TELLER, INVESTMENT_ANALYST, COMPLIANCE_OFFICER, TECH_SUPPORT
-    # Resources: CLIENT_INFO, ACCOUNT_BALANCE, INVESTMENTS_PORTFOLIO, CD_FA, CD_FP, CD_IA, MONEY_MARKET_I, DERIVATIVES_TRADING, INTEREST_INSTRUMENTS, PRVT_CONSUMER_INSTRUMENTS, SYSTEM
-
+    # Method to perform access control tests and print results
     def tester(self, t, a, r, expected):
         actual = self.accessControl.check_access(t, a, r)
         print(f"Testing {a.name} access to {r.name}. Expected: {expected}. Actual: {actual}")

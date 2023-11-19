@@ -5,6 +5,7 @@ from access_control import AccessControl
 from enums import RoleType
 from subject import Subject
 
+# Define the Enroller class for user enrollment
 class Enroller:
 
     def __init__(self, ac: AccessControl):
@@ -13,6 +14,7 @@ class Enroller:
         self.common_passwords = self.get_common_passwords()
 
     def get_common_passwords(self):
+        # Retrieve common passwords from a file
         common_passwords = []
         try:
             with open("commonPasswords.txt", "r") as f:
@@ -23,6 +25,7 @@ class Enroller:
     
     @staticmethod
     def hash_password(password, salt):
+        # Hash the password using SHA-256 with a provided salt
         sha256 = hashlib.sha256()
         sha256.update(salt)
         sha256.update(password.encode('utf-8'))
@@ -38,6 +41,7 @@ class Enroller:
         self.save_record(username, password, roles)
 
     def get_unique_username(self):
+        # Prompt the user for a unique username
         username = self.reader("Enter a Username: ")
         while self.ac.does_username_already_exist(username):
             print("Sorry, that username already exists. Choose another one.")
@@ -45,6 +49,7 @@ class Enroller:
         return username
 
     def print_password_policy(self):
+        # Display the password policy to the user
         print("\nEnter a Password...")
         print("Password must be 8-12 characters in length.")
         print("Password must include at least:\n\t- one upper-case letter\n\t- one lower-case letter\n\t- one numerical digit, and\n\t- one special character from the set {!,@,#,$,%,?,*}")
@@ -53,6 +58,7 @@ class Enroller:
         print("Password can not match your username.")
 
     def get_valid_password(self, username):
+        # Prompt the user for a valid password based on the password policy
         self.print_password_policy()
         password = self.reader("\nPassword: ")
         pwd_check = self.password_checker(password, username)
@@ -63,6 +69,7 @@ class Enroller:
         return password
 
     def password_checker(self, password, username):
+        # Check if the provided password meets the specified criteria
         if password == username:
             return "Password cannot match the username."
 
@@ -101,6 +108,7 @@ class Enroller:
         return None
 
     def get_roles(self):
+        # Prompt the user to select roles from available options
         print("Enter the number corresponding to the role of the user. The available roles are: ")
         for i, r in enumerate(RoleType):
             print(f"{i} - {r.name}")  # Access the name attribute to get the enum member without the enum type
@@ -119,6 +127,7 @@ class Enroller:
         return roles
 
     def save_record(self, username, password, roles):
+        # Save the user record with hashed password and roles information
         role_types = [  "PREMIUM_CLIENT", "FINANCIAL_ADVISOR", "FINANCIAL_PLANNER","TELLER","INVESTMENT_ANALYST","COMPLIANCE_OFFICER","TECH_SUPPORT"]
         roles = [role - 1 for role in roles]
 
@@ -138,9 +147,11 @@ class Enroller:
 
     @staticmethod
     def bytes_to_hex(data):
+        # Convert bytes to hexadecimal string
         return data.hex()
 
 if __name__ == "__main__":
+    # Create an instance of AccessControl and Enroller, then enroll a user
     ac = AccessControl()
     eu = Enroller(ac)
     eu.enrol_user()

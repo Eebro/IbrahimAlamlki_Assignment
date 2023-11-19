@@ -6,6 +6,7 @@ from enums import RoleType, AccessType
 from role import Role
 from enroller import Enroller
 
+# Define the LogIn class for handling user login processes
 class LogIn:
 
     not_found_msg = "This account does not exist in the system"
@@ -16,6 +17,7 @@ class LogIn:
         self.e = Enroller(self.ac)
 
     def does_username_already_exist(self, username: str) -> bool:
+        # Check if a username already exists in the system
         with open("passwd.txt", "r") as file:
             for line in file:
                 stored_username = line.split(":")[0]
@@ -24,14 +26,15 @@ class LogIn:
         return False
     
     def prompt_login(self):
+        # Prompt the user for login credentials and process the login
         print("Finvest Holdings Registration")
-        print ("Client Holdings and Information System\n------------------------------------------")
+        print("Client Holdings and Information System\n------------------------------------------")
         username = input("Username: ")
         password = input("Password: ")
         self.process_login(username, password)
 
-
     def process_login(self, username: str, password: str) -> bool:
+        # Process the login attempt for the given username and password
         if not self.does_username_already_exist(username):
             print(self.not_found_msg)
             return False
@@ -56,9 +59,9 @@ class LogIn:
             print(self.not_found_msg)
             return False
 
-
     @staticmethod
     def calculate_salted_hash(s: Subject, password: str) -> str:
+        # Calculate the salted hash for the provided subject and password
         try:
             md = hashlib.sha256()
             md.update(bytes(bytearray(LogIn.hex_to_bytes(s.get_salt()))))  # Convert list to bytes
@@ -72,9 +75,8 @@ class LogIn:
             print(e)
             return ""
 
-
-
     def print_user_info(self, s: Subject):
+        # Print user information, including roles and associated resources
         print("User ID is: " + s.get_name())
         roles = s.get_roles()
         for r in roles:
@@ -85,16 +87,14 @@ class LogIn:
                 if res.get_access_type() == AccessType.CONDITIONAL:
                     print(Role.get_env_policy(r))
 
-
-
     @staticmethod
     def hex_to_bytes(s: str) -> bytes:
+        # Convert hexadecimal string to bytes
         try:
             return bytes.fromhex(s)
         except ValueError:
             print("Error converting hex to bytes.")
             return b''
-
 
 if __name__ == "__main__":
     ac = AccessControl()

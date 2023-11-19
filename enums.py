@@ -1,11 +1,13 @@
 from enum import Enum
 
+# Define AccessType enum for access permission levels
 class AccessType(Enum):
     VIEW = 1
     MODIFY = 2
     VALIDATE = 3
     CONDITIONAL = 4
 
+# Define ResourceType enum for different types of system resources
 class ResourceType(Enum):
     CLIENT_INFO = 1
     ACCOUNT_BALANCE = 2
@@ -19,6 +21,8 @@ class ResourceType(Enum):
     PRVT_CONSUMER_INSTRUMENTS = 10
     SYSTEM = 11
 
+
+# Define RoleType enum for different user roles
 class RoleType(Enum):
     REGULAR_CLIENT = 0
     PREMIUM_CLIENT = 1

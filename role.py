@@ -2,11 +2,14 @@ from typing import List
 from enums import RoleType, AccessType, ResourceType
 from custom_resource import Resource
 
+# Define the Role class for handling role-specific operations
 class Role:
+
     @staticmethod
     def get_env_policy(r: RoleType) -> str:
+        # Get the environmental policy for the specified role
         if r == RoleType.TELLER:
-            return "As a teller, this user can only access the system between 9 a.m. and 5 p.m. \n As a teller, this user can only access client accounts with their permission."
+            return "As a teller, this user can only access the system between 9 a.m. and 5 p.m.\nAs a teller, this user can only access client accounts with their permission."
         elif r == RoleType.TECH_SUPPORT:
             return "Technical support can only access client accounts with their permission"
         else:
@@ -14,6 +17,7 @@ class Role:
 
     @staticmethod
     def create_capability_list(r: RoleType) -> List[Resource]:
+        # Create and return a list of resources based on the specified role
         resources = [Resource(ResourceType.CLIENT_INFO, AccessType.VIEW)]
 
         if r == RoleType.PREMIUM_CLIENT:
